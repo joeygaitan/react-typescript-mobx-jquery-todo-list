@@ -9,6 +9,7 @@ import PersonalDashboard from './components/PersonalDashboard/index';
 import Login from './components/Login/index';
 import SignUp from './components/Signup/index';
 import AuthenticatedRoute from './HigherOrderComponents/AuthenticatedRoute';
+import TodoProjectBoard from './components/PersonalDashboard/PersonalTodoDashboard/TodoProjectBoard/index';
 // one instance of all the stores
 
 const App: FC = () => {
@@ -20,6 +21,7 @@ const App: FC = () => {
             <Route exact path ='/signup' component={SignUp}/>
             <Route path = '/login' component={Login}/>
             <AuthenticatedRoute path={'/'} component = {PersonalDashboard} />
+            <AuthenticatedRoute path={'/todo/:id'} component = {TodoProjectBoard} /> 
           </Switch>
         </div>
     </BrowserRouter>

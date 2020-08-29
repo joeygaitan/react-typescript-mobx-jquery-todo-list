@@ -66,9 +66,19 @@ const tokenCheck = async () => {
     
 }
 
+const getToken = () => {
+    const token = sessionStorage.getItem('Authorization');
+
+    if (token) {
+        return token
+    } else {
+        return null
+    }
+}
+
 const singOut = () => {
     sessionStorage.removeItem('Authorization');
     //clear mobx username and pending.....
 } 
 
-export { login, tokenCheck, signUp, singOut };
+export { login, tokenCheck, signUp, singOut, getToken };

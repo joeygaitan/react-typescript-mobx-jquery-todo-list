@@ -3,6 +3,7 @@ import {Route, Redirect, } from 'react-router-dom';
 
 //authentication
 import { tokenCheck } from '../utils/authentication';
+
 interface AuthenticatedProps {
     component: React.ComponentType;
     path: string;
@@ -24,12 +25,14 @@ const AuthenticatedRoute : FC<AuthenticatedProps> = (props:AuthenticatedProps) =
     useEffect(()=>{
       loginState();
     },[])
+
     const {
         path,
         component
     } = props;
+
     if (state.pending && !state.username) {
-        return <div>loading</div>
+        return <div>loading....</div>
     } else if (state.username) {
         return <Route path={path} component={component} />
     } else {
@@ -37,6 +40,6 @@ const AuthenticatedRoute : FC<AuthenticatedProps> = (props:AuthenticatedProps) =
     }
 }
 
-//somekind of auth function that checks for user
+//some kind of auth function that checks for user
 
 export default AuthenticatedRoute;

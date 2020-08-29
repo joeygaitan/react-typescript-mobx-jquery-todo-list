@@ -5,6 +5,7 @@ import { isEqual } from 'lodash';
 
 // components
 import SignOutComponent from '../../HigherOrderComponents/SignOutComponent';
+import PersonalTodoDashboard from './PersonalTodoDashboard/index';
 
 interface PersonalUserRequest {
     username: string;
@@ -23,7 +24,7 @@ interface IntialPersonalTodo {
 
 const PersonalDashboard:FC = () => {
     let intialUserProfile:PersonalUserRequest = {username:"",first_name:"", last_name:"",gender:"",bio:"",email:"",id:0}
-    let intialTodo:IntialPersonalTodo ={id:0, header:""}
+    let intialTodo={id:0, header:""}
     const [userState, setUserState] = useState({ profileInformation: {...intialUserProfile}, personalTodosCardContainer:[{...intialTodo}]});
 
     const getUserInformation = async () => {
@@ -85,13 +86,11 @@ const PersonalDashboard:FC = () => {
     return (
         <React.Fragment>
             <div>
-    <div className="profileDashBoardCardContainer"><p>username: {userState.profileInformation.username}</p></div>
+            <div className="profileDashBoardCardContainer"><p>username: {userState.profileInformation.username}</p></div>
             </div>
             <div className="sortAble">
                 Dashboard
-            <div className="personalTodosCardContainer"><p>Todos</p><div>{(userState.personalTodosCardContainer) ? userState.personalTodosCardContainer.map((todo)=>{
-        return <p key={todo.id}>{todo.header}</p>
-    }) : ""}</div></div>
+                <PersonalTodoDashboard personalTodosArray={userState.personalTodosCardContainer} />
                 <div className="personalNotesCardContainer"><p>Notes</p></div>
                 <div className="groupProjectsCardContainer"><p>Group Projects</p></div>
                 <SignOutComponent/>
