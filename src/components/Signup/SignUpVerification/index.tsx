@@ -16,17 +16,13 @@ const SingUpVerification:FC<SignUpInputProps> = ({state, changeState}:SignUpInpu
         let capitalCheck = new RegExp("[A-Z]", "g")
         let specialCharCheck = new RegExp("[\!|\@|\?|\_|\-|\*|\~]", "g")
         let numeralCheck = new RegExp("[0-9]", "g")
-        
+    
+
         if (state.password.length > 8) {
             console.log(state.password.length)
             setPasswordState({
                 ...passwordState,
                 ["lengthCheck"]:true
-            })
-        } else {
-            setPasswordState({
-                ...passwordState,
-                ["lengthCheck"]:false
             })
         }
 
@@ -35,22 +31,13 @@ const SingUpVerification:FC<SignUpInputProps> = ({state, changeState}:SignUpInpu
                 ...passwordState,
                 ["lowerCaseCheck"]:true
             })
-        } else {
-            setPasswordState({
-                ...passwordState,
-                ["lowerCaseCheck"]:false
-            })
         }
+
         console.log(capitalCheck.test(state.password))
         if (capitalCheck.test(state.password)) {
             setPasswordState({
                 ...passwordState,
                 ["capitalCheck"]:true
-            })
-        } else {
-            setPasswordState({
-                ...passwordState,
-                ["capitalCheck"]:false
             })
         }
         
@@ -60,22 +47,12 @@ const SingUpVerification:FC<SignUpInputProps> = ({state, changeState}:SignUpInpu
                 ...passwordState,
                 ["specialCharacterCheck"]:true
             })
-        } else {
-            setPasswordState({
-                ...passwordState,
-                ["specialCharacterCheck"]:false
-            })
         }
 
         if (numeralCheck.test(state.password)) {
             setPasswordState({
                 ...passwordState,
                 ["numberCheck"]:true
-            })
-        } else {
-            setPasswordState({
-                ...passwordState,
-                ["numberCheck"]:false
             })
         }
 
@@ -96,7 +73,6 @@ const SingUpVerification:FC<SignUpInputProps> = ({state, changeState}:SignUpInpu
     console.log(state.password, passwordState)
 
     useEffect(()=>{
-
         checkInputValue()
     }, [state.password])
 

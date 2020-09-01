@@ -10,6 +10,8 @@ import { errorMessages } from '../../utils/failureStrings';
 import SignUpVerification from './SignUpVerification/index';
 import { stat } from 'fs';
 
+
+
 export interface SignUpState {
     firstname: string;
     lastname: string;
@@ -32,6 +34,7 @@ interface PathWayLocation {
 }
 
 const SignUp : FC = (props) => {
+    
     let history = useHistory();
     const [state, setState] = useState<SignUpState>({firstname: "", lastname:"", email:"", username:"", password:"", errorMessage:"", displayPassword:false, failure:false});
     
@@ -73,7 +76,7 @@ const SignUp : FC = (props) => {
             return
         }
     }
-    console.log(state.failure)
+    console.log(state.failure, "line 76 in then index page....")
     return (<div>
             {(state.errorMessage.length > 0) ? <p>{state.errorMessage}</p> : ""}
             <br/>
@@ -83,7 +86,7 @@ const SignUp : FC = (props) => {
                 const { name, value } = event.target;
                 setState({
                     ...state,
-                    [name]:value
+                    [name]: value
                 })
             }}/>
             <br/>
