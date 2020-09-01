@@ -6,13 +6,19 @@ import {Link, useHistory, withRouter } from 'react-router-dom';
 
 import { signUp } from '../../utils/authentication';
 import { errorMessages } from '../../utils/failureStrings';
+
+import SignUpVerification from './SignUpVerification/index';
 import { stat } from 'fs';
 
-interface SignUpState {
+export interface SignUpState {
+    firstname: string;
+    lastname: string;
+    email: string;
     username:string;
     password:string;
     errorMessage:string;
     displayPassword:boolean;
+    failure:boolean;
 }
 
 interface LocationState {
@@ -27,12 +33,28 @@ interface PathWayLocation {
 
 const SignUp : FC = (props) => {
     let history = useHistory();
-    const [state, setState] = useState<SignUpState>({username:"", password:"", errorMessage:"", displayPassword:false});
+    const [state, setState] = useState<SignUpState>({firstname: "", lastname:"", email:"", username:"", password:"", errorMessage:"", displayPassword:false, failure:false});
     
-    let pathWay : PathWayLocation    = { pathname:"/login", state: {username: state.username, password: state.password} }
+    let pathWay : PathWayLocation = { pathname:"/login", state: {username: state.username, password: state.password} }
 
     const onSignUp = async () => {
-        let result = await signUp({username: state.username, password:state.password})
+
+        if (state.failure) {
+            setState({
+                ...state,
+                ["errorMessage"]: "password doesn't meet the requirements....."
+            })
+            setInterval(()=>{
+                setState({
+                ...state,
+                ["errorMessage"]: ""
+            })
+            clearInterval()
+            },5000)
+            return
+        }
+
+        let result = await signUp({username: state.username, password:state.password, email:state.email, firstname:state.firstname, lastname:state.lastname})
 
         if (result){
             history.push(pathWay)
@@ -51,11 +73,13 @@ const SignUp : FC = (props) => {
             return
         }
     }
-
+    console.log(state.failure)
     return (<div>
             {(state.errorMessage.length > 0) ? <p>{state.errorMessage}</p> : ""}
-            username
-            <input name="username" defaultValue={state.username} onChange={(event)=>{
+            <br/>
+            <br/>
+            first name
+            <input name="firstname" defaultValue={state.firstname} onChange={(event)=>{
                 const { name, value } = event.target;
                 setState({
                     ...state,
@@ -63,20 +87,18 @@ const SignUp : FC = (props) => {
                 })
             }}/>
             <br/>
-            password
-            <input name="password" defaultValue={state.password} type={(state.displayPassword) ? "text":"password"} onChange={(event)=>{
+            <br/>
+            last name
+            <input name="lastname" defaultValue={state.lastname} onChange={(event)=>{
                 const { name, value } = event.target;
                 setState({
                     ...state,
                     [name]:value
                 })
             }}/>
-            <button onClick={()=>{
-                setState({
-                    ...state,
-                    ["displayPassword"]:!state.displayPassword
-                })
-            }}></button>
+            <br/>
+            <br/>
+            <SignUpVerification state={state} changeState={setState} />
             <br/>
             <button onClick={onSignUp}>Sign Up</button>
             <br/>

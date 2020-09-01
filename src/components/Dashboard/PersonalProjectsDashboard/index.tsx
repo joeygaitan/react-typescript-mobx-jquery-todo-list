@@ -4,7 +4,7 @@ import 'jqueryui';
 import { isEqual } from 'lodash';
 
 // components
-import SignOutComponent from '../../HigherOrderComponents/SignOutComponent';
+import SignOutComponent from '../../../HigherOrderComponents/SignOutComponent';
 import PersonalTodoDashboard from './PersonalTodoDashboard/index';
 
 interface PersonalUserRequest {

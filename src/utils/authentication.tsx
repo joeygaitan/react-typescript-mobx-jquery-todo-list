@@ -1,9 +1,17 @@
- export interface LoginInput {
+ export interface signUpInput {
    username: string;
    password: string; 
+   email:string;
+   firstname:string;
+   lastname:string;
 }
 
-const signUp = async ({username, password}:LoginInput) => {
+export interface LoginInput {
+    username: string;
+    password: string;
+}
+
+const signUp = async ({username, password, firstname, lastname, email}:signUpInput) => {
     try {
         let response = await fetch(`${process.env.REACT_APP_API_URL}/signup/`, {
             method: 'post',
@@ -12,7 +20,7 @@ const signUp = async ({username, password}:LoginInput) => {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
             },
-            body: JSON.stringify({username,password})
+            body: JSON.stringify({username,password,firstname,lastname,email})
         })
         let result = await response.json();
         return true

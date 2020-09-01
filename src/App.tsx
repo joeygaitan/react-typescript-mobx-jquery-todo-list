@@ -5,11 +5,11 @@ import { BrowserRouter, Route, Switch,RouteComponentProps } from 'react-router-d
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 
-import PersonalDashboard from './components/PersonalDashboard/index';
+import PersonalDashboard from './components/Dashboard/PersonalProjectsDashboard/index';
 import Login from './components/Login/index';
 import SignUp from './components/Signup/index';
 import AuthenticatedRoute from './HigherOrderComponents/AuthenticatedRoute';
-import TodoProjectBoard from './components/PersonalDashboard/PersonalTodoDashboard/TodoProjectBoard/index';
+import TodoProjectBoard from './components/Dashboard/PersonalProjectsDashboard/PersonalTodoDashboard/TodoProjectBoard/index';
 // one instance of all the stores
 
 const App: FC = () => {

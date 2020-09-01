@@ -24,7 +24,7 @@ const AuthenticatedRoute : FC<AuthenticatedProps> = (props:AuthenticatedProps) =
   
     useEffect(()=>{
       loginState();
-    },[])
+    },[state.pending, state.username])
 
     const {
         path,
