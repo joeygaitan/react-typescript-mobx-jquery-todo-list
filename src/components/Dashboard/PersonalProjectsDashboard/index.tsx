@@ -6,22 +6,9 @@ import { isEqual } from 'lodash';
 // components
 import SignOutComponent from '../../../HigherOrderComponents/SignOutComponent';
 
-import PersonalProjectListDashboad from './personal_project/PersonalProjectListDashboard/index'
-import { profile } from 'console';
-
-interface PersonalUserRequest {
-    username: string;
-    firstname: string;
-    lastname: string;
-    gender: string;
-    bio: string;
-    email:string;
-    id:number;
-}
+import PersonalProjectListDashboard from './personal_project/PersonalProjectListDashboard/index'
 
 const PersonalDashboard:FC = () => {
-    // let intialUserProfile:PersonalUserRequest = {username:"",firstname:"", lastname:"",gender:"",bio:"",email:"",id:0}
-    // let intialTodo={id:0, header:""}
     const [userState, setUserState] = useState<any>({ profileInformation: {}, personalProjects:[]});
 
     const getUserInformation = async () => {
@@ -86,8 +73,8 @@ const PersonalDashboard:FC = () => {
             </div>
             <div className="sortAble">
                 Dashboard
-                <PersonalProjectListDashboad personalProjects={userState.personalProjects}/>
-                <div className="groupProjectsCardContainer"><p>Group Projects</p></div>
+                <PersonalProjectListDashboard personalProjects={userState.personalProjects}/>
+                <div className="groupProjectsCardContainer"><p>Group Projects |under construction|</p></div>
                 <SignOutComponent/>
             </div>
         </React.Fragment>
