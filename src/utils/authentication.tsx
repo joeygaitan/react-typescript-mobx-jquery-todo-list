@@ -65,10 +65,8 @@ const tokenCheck = async () => {
         },
        )
         let {username, id, iat} = await response.json();
-        console.log(username)
         return { username, pending:false }
     } catch {
-        console.log("failed to authenticate. Missing token....")
         return { username:null, pending:false }
     }
     
