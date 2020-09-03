@@ -6,7 +6,8 @@ import { isEqual } from 'lodash';
 // components
 import SignOutComponent from '../../../HigherOrderComponents/SignOutComponent';
 
-
+import PersonalProjectListDashboad from './personal_project/PersonalProjectListDashboard/index'
+import { profile } from 'console';
 
 interface PersonalUserRequest {
     username: string;
@@ -19,9 +20,9 @@ interface PersonalUserRequest {
 }
 
 const PersonalDashboard:FC = () => {
-    let intialUserProfile:PersonalUserRequest = {username:"",firstname:"", lastname:"",gender:"",bio:"",email:"",id:0}
-    let intialTodo={id:0, header:""}
-    const [userState, setUserState] = useState({ profileInformation: {...intialUserProfile}, personalProjects:[{...intialTodo}]});
+    // let intialUserProfile:PersonalUserRequest = {username:"",firstname:"", lastname:"",gender:"",bio:"",email:"",id:0}
+    // let intialTodo={id:0, header:""}
+    const [userState, setUserState] = useState<any>({ profileInformation: {}, personalProjects:[]});
 
     const getUserInformation = async () => {
         let token = sessionStorage.getItem('Authorization');
@@ -77,8 +78,7 @@ const PersonalDashboard:FC = () => {
             revert: true
         });
         getUserInformation();
-    },[])
-
+    },[userState.personalProjects,userState.personalProjects])
     return (
         <React.Fragment>
             <div>
@@ -86,8 +86,7 @@ const PersonalDashboard:FC = () => {
             </div>
             <div className="sortAble">
                 Dashboard
-                
-                <div className="personalNotesCardContainer"><p>Notes</p></div>
+                <PersonalProjectListDashboad personalProjects={userState.personalProjects}/>
                 <div className="groupProjectsCardContainer"><p>Group Projects</p></div>
                 <SignOutComponent/>
             </div>

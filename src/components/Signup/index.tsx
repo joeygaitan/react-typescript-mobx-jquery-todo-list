@@ -7,9 +7,8 @@ import {Link, useHistory, withRouter } from 'react-router-dom';
 import { signUp } from '../../utils/authentication';
 import { errorMessages } from '../../utils/failureStrings';
 
-import SignUpVerification from './SignUpVerification/index';
-
 import filter from '../../utils/inputValidation'
+import { stat } from 'fs';
 
 
 export interface SignUpState {
@@ -97,17 +96,9 @@ const SignUp : FC = (props) => {
     const verifyValue = (regex:RegExp, value:string) => {
         
         if (regex.test(state.password)) {
-            // setPasswordState({
-            //     ...passwordState,
-            //     [value]:true
-            // })
             SpecialCharacterRef.current[value] = true;
         }
          else {
-            // setPasswordState({
-            //     ...passwordState,
-            //     [value]:false
-            // })
             SpecialCharacterRef.current[value] = false;
         }
     } 
@@ -120,7 +111,7 @@ const SignUp : FC = (props) => {
         verifyValue(/[\!|\@|\?|\_|\-|\*|\~]/, "specialCharacterCheck")
         verifyValue(/[0-9]/g, "numberCheck")
 
-        if(SpecialCharacterRef.current.capitalCheck && SpecialCharacterRef.current.lowerCaseCheck && SpecialCharacterRef.current.numberCheck && SpecialCharacterRef.current.specialCharacterCheck) {
+        if(SpecialCharacterRef.current.capitalCheck && SpecialCharacterRef.current.lowerCaseCheck && SpecialCharacterRef.current.numberCheck && SpecialCharacterRef.current.specialCharacterCheck && state.password.length >= 8) {
             setState({
                 ...state,
                 ["failure"]:false 
@@ -136,18 +127,10 @@ const SignUp : FC = (props) => {
         }
     }
 
-    const passwordSecured = () => {
-        setPasswordState({
-            ...passwordState,
-            ["inputValueClicked"]: false
-        })
-    }
-
     useEffect(()=>{
         checkInputValue()
     }, [state.password])
 
-    console.log(state.failure, "line 76 in then index page....")
     return (<div>
             {(state.errorMessage.length > 0) ? <p>{state.errorMessage}</p> : ""}
             <br/>
@@ -218,14 +201,15 @@ const SignUp : FC = (props) => {
             <br/>
             <br/>
                 {(passwordState.inputValueClicked) ? (<div>
+                    <p>at least 8 characters: {(state.password.length >= 8)? "passed" : "failed"}</p>
                     <br/>
                     <p> At least one lower case alphabetical character: {(SpecialCharacterRef.current.lowerCaseCheck) ? "passed": "failed"}</p>
                     <br/>
                     <p>At least one upper case alphabetical character: {(SpecialCharacterRef.current.capitalCheck) ? "passed": "failed"}</p>
                     <br/>
-                    <p>at least one of these special characters (?!@_-*~): {(SpecialCharacterRef.current.specialCharacterCheck) ? "passed":"failed"}</p>
+                    <p>At least one of these special characters (?!@_-*~): {(SpecialCharacterRef.current.specialCharacterCheck) ? "passed":"failed"}</p>
                     <br/>
-                    <p> at least one numerical number: {(SpecialCharacterRef.current.numberCheck)?"passed" :"failed"}</p></div>) :""}  
+                    <p> At least one numerical number: {(SpecialCharacterRef.current.numberCheck)?"passed" :"failed"}</p></div>) :""}  
 
             <br/>
             <button onClick={onSignUp}>Sign Up</button>
