@@ -2,18 +2,15 @@ import React, { FC, useState, useEffect } from 'react';
 
 import { isEqual } from 'lodash';
 
-import { RouteComponentProps } from 'react-router-dom'
+import { RouteComponentProps, match, useLocation, withRouter } from 'react-router-dom'
+import { useLocalStore } from 'mobx-react';
 
-
-type RouteParams = {
-    id: string; // must be type string since route params
-}
-
-const PersonalProjectDashboard : FC<RouteComponentProps<RouteParams>> = (props) => {
+const PersonalProjectDashboard : FC = (props) => {
+    let location = useLocation() 
     const [state, setState] = useState({userInformation:{}, listBoards:[]})
-    
+    console.log(location.pathname)
     const getProjectInformation = async () => {
-        const id = props.match.params.id
+        const id = location.pathname
         let token = sessionStorage.getItem('Authorization');
         try {
             let response = await fetch(`${process.env.REACT_APP_API_URL}/personal_projects/${id}`, {
@@ -43,9 +40,9 @@ const PersonalProjectDashboard : FC<RouteComponentProps<RouteParams>> = (props) 
     return (
         <>
         hello
-        <header></header>
+        <header>hello</header>
         </>
     )
 }
 
-export default PersonalProjectDashboard;
+export default withRouter(PersonalProjectDashboard);

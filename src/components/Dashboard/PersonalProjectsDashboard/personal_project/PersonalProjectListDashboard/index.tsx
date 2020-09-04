@@ -1,6 +1,8 @@
 import React, { FC, useState, useEffect } from 'react';
 
-import {RouteComponentProps, Link} from 'react-router-dom';
+import {RouteComponentProps, Link, withRouter} from 'react-router-dom';
+
+
 
 interface ProjectItem {
     id:number;
@@ -9,14 +11,16 @@ interface ProjectItem {
     private:number
 }
 
-interface ProjectObject {
-    personalProjects: ProjectItem[]
+interface PersonalProjectListProps extends RouteComponentProps {
+    personalProjects: ProjectItem[],
+    addOne: (input:any)=>Promise<void>
 }
 
-const PersonalProjectListDashboard : FC<ProjectObject> = (props:ProjectObject) => {
+const PersonalProjectListDashboard : FC<PersonalProjectListProps> = (props:PersonalProjectListProps) => { 
+
     return (
         <div>
-            {props.personalProjects.map((project:ProjectItem)=>{
+            {(props.personalProjects) ? props.personalProjects.map((project:ProjectItem)=>{
                 return (
                     <div key={project.id}>
                         title: {project.title}
@@ -24,9 +28,10 @@ const PersonalProjectListDashboard : FC<ProjectObject> = (props:ProjectObject) =
                         <Link to = {`/${project.id}`}><p>pick this one</p></Link>
                     </div>
                 )
-            })}
+            }): ""}
+
         </div>
     )
 }
 
-export default PersonalProjectListDashboard;
+export default withRouter(PersonalProjectListDashboard);

@@ -3,12 +3,16 @@ import $ from "jquery";
 import 'jqueryui';
 import { isEqual } from 'lodash';
 
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+
 // components
 import SignOutComponent from '../../../HigherOrderComponents/SignOutComponent';
 
 import PersonalProjectListDashboard from './personal_project/PersonalProjectListDashboard/index'
 
-const PersonalDashboard:FC = () => {
+import {getToken} from '../../../utils/authentication' 
+
+const PersonalDashboard:FC<RouteComponentProps> = () => {
     const [userState, setUserState] = useState<any>({ profileInformation: {}, personalProjects:[]});
 
     const getUserInformation = async () => {
@@ -60,6 +64,28 @@ const PersonalDashboard:FC = () => {
         }
     } 
 
+    const addOne = async (input:any) => {
+        let token = getToken()
+
+        try {
+            let addNewProjectResponse = await fetch(`${process.env.REACT_APP_API_URL}/personal_projects`, {
+                method: 'post',
+                mode: 'cors',
+                headers : {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': token ? `Bearer ${token}`: ''
+                },
+                body: JSON.stringify(input)
+            })
+
+            getUserInformation();
+        } catch {
+            console.log("request failed")
+        }   
+
+    }
+
     useEffect(()=>{
         $('.sortAble').sortable({
             revert: true
@@ -73,7 +99,7 @@ const PersonalDashboard:FC = () => {
             </div>
             <div className="sortAble">
                 Dashboard
-                <PersonalProjectListDashboard personalProjects={userState.personalProjects}/>
+                <PersonalProjectListDashboard personalProjects={userState.personalProjects} addOne = {addOne}/>
                 <div className="groupProjectsCardContainer"><p>Group Projects |under construction|</p></div>
                 <SignOutComponent/>
             </div>
@@ -81,4 +107,4 @@ const PersonalDashboard:FC = () => {
     )
 }
 
-export default PersonalDashboard;
+export default withRouter(PersonalDashboard);

@@ -9,7 +9,7 @@ import PersonalDashboard from './components/Dashboard/PersonalProjectsDashboard/
 import Login from './components/Login/index';
 import SignUp from './components/Signup/index';
 import AuthenticatedRoute from './HigherOrderComponents/AuthenticatedRoute';
-import PersonalProjectDashboard from './components/Dashboard/PersonalProjectsDashboard/personal_project/PersonalProjectDashboard'
+import PersonalProjectDashboard from './components/Dashboard/PersonalProjectsDashboard/personal_project/PersonalProjectDashboard/index'
 
 // one instance of all the stores
 

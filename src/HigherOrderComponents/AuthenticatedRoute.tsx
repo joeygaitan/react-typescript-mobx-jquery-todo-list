@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import {Route, Redirect, } from 'react-router-dom'; 
+import {Route, Redirect, withRouter} from 'react-router-dom'; 
 
 //authentication
 import { tokenCheck } from '../utils/authentication';
