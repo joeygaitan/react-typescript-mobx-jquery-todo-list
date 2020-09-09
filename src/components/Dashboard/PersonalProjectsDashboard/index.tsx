@@ -10,10 +10,12 @@ import SignOutComponent from '../../../HigherOrderComponents/SignOutComponent';
 
 import PersonalProjectListDashboard from './personal_project/PersonalProjectListDashboard/index'
 
+import AddPersonalProjectDashboard from './personal_project/PersonalProjectListDashboard/AddPersonalProjectDashboard/index'
+
 import {getToken} from '../../../utils/authentication' 
 
 const PersonalDashboard:FC<RouteComponentProps> = () => {
-    const [userState, setUserState] = useState<any>({ profileInformation: {}, personalProjects:[]});
+    const [userState, setUserState] = useState<any>({ profileInformation: {}, personalProjects:[], displayAddition:false});
 
     const getUserInformation = async () => {
         let token = sessionStorage.getItem('Authorization');
@@ -54,11 +56,13 @@ const PersonalDashboard:FC<RouteComponentProps> = () => {
                     if (personal_projects.length !== 0) {
                         setUserState({
                             ...userState,
-                            ["personalProjects"]: [ ...personal_projects]
+                            ["personalProjects"]: [ ...personal_projects],
+                            ["displayAddition"]: false
                         })
                     }
                 }
             token = "";
+            
         } catch {
             token = ""
         }
@@ -78,7 +82,6 @@ const PersonalDashboard:FC<RouteComponentProps> = () => {
                 },
                 body: JSON.stringify(input)
             })
-
             getUserInformation();
         } catch {
             console.log("request failed")
@@ -99,7 +102,12 @@ const PersonalDashboard:FC<RouteComponentProps> = () => {
             </div>
             <div className="sortAble">
                 Dashboard
-                <PersonalProjectListDashboard personalProjects={userState.personalProjects} addOne = {addOne}/>
+                <button onClick={()=>{setUserState({
+                    ...userState,
+                    ["displayAddition"]: !userState.displayAddition
+                })}}>Add new Personal Project</button>
+                {(userState.displayAddition) ? <AddPersonalProjectDashboard addOne={addOne}/>:""}
+                <PersonalProjectListDashboard personalProjects={userState.personalProjects} />
                 <div className="groupProjectsCardContainer"><p>Group Projects |under construction|</p></div>
                 <SignOutComponent/>
             </div>

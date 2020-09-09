@@ -12,8 +12,7 @@ interface ProjectItem {
 }
 
 interface PersonalProjectListProps extends RouteComponentProps {
-    personalProjects: ProjectItem[],
-    addOne: (input:any)=>Promise<void>
+    personalProjects: ProjectItem[]
 }
 
 const PersonalProjectListDashboard : FC<PersonalProjectListProps> = (props:PersonalProjectListProps) => { 
