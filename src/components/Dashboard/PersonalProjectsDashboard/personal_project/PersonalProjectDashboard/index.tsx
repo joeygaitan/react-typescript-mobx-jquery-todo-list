@@ -7,8 +7,9 @@ import { useLocalStore } from 'mobx-react';
 
 const PersonalProjectDashboard : FC = (props) => {
     let location = useLocation() 
-    const [state, setState] = useState({userInformation:{}, listBoards:[]})
+    const [state, setState] = useState({userInformation:{id:0}, listBoards:[], displayListBoards:""})
     console.log(location.pathname)
+
     const getProjectInformation = async () => {
         const id = location.pathname
         let token = sessionStorage.getItem('Authorization');
@@ -33,14 +34,15 @@ const PersonalProjectDashboard : FC = (props) => {
         }
     }
 
+    
+
     useEffect(()=>{
         getProjectInformation()
-    }, [state.userInformation])
-    
+    }, [state.userInformation.id])
+    console.log("here", state.userInformation)
     return (
         <>
-        hello
-        <header>hello</header>
+        
         </>
     )
 }

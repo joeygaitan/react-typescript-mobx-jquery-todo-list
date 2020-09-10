@@ -30,7 +30,8 @@ const AuthenticatedRoute : FC<AuthenticatedProps> = (props:AuthenticatedProps) =
         path,
         component
     } = props;
-
+    console.log("path", path)
+    console.log(component.displayName)
     if (state.pending && !state.username) {
         return <div>loading....</div>
     } else if (state.username) {

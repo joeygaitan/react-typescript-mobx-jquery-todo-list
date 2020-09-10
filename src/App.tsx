@@ -21,8 +21,8 @@ const App: FC = () => {
           <Switch>      
             <Route exact path ='/signup' component={SignUp}/>
             <Route path = '/login' component={Login}/>
-            <AuthenticatedRoute path={'/'} component = {PersonalDashboard} />
             <AuthenticatedRoute path={'/:id'} component = {PersonalProjectDashboard} />
+            <AuthenticatedRoute path={'/'} component = {PersonalDashboard} />
           </Switch>
         </div>
     </BrowserRouter>
